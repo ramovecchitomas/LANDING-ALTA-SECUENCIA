@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alta Secuencia — Productora audiovisual con 10 años de experiencia en Buenos Aires. Videoclips, contenido institucional, fotografía y más.">
+<title>Alta Secuencia — Productora Audiovisual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --orange: #F5A623;
+    --teal: #7BBFB5;
+    --black: #000000;
+    --near-black: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(245,166,35,0.4);
+    --white: #ffffff;
+    --gray: #888888;
+    --gray-light: #cccccc;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor.hovering { width: 40px; height: 40px; background: var(--orange); }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(245,166,35,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.25s ease, width 0.3s, height 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 48px;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, border-bottom 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .lang-toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .lang-btn {
+    padding: 6px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em;
+    background: transparent; border: none;
+    color: var(--gray); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--orange); color: #000; }
+  .nav-cta {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border-radius: 4px; cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--orange); color: #000; }
+
+  /* HERO */
+  #hero {
+    height: 100vh; min-height: 600px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .hero-noise {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 256px;
+    z-index: 1; pointer-events: none;
+  }
+  .hero-lines {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { 0%{background-position:0 0} 100%{background-position:80px 80px} }
+
+  .hero-content { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(80px, 14vw, 180px);
+    line-height: 0.88;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-h1 em { color: var(--orange); font-style: normal; }
+  .hero-tagline {
+    margin-top: 28px;
+    font-size: 15px; font-weight: 300;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray);
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 48px;
+    padding: 16px 36px;
+    border: 1px solid var(--orange);
+    background: transparent; color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer;
+    border-radius: 3px;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+    transition: all 0.25s;
+    text-decoration: none;
+  }
+  .hero-btn:hover { background: var(--orange); color: #000; }
+  .hero-btn svg { width: 14px; height: 14px; }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; text-align: center;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .hero-scroll span {
+    display: block; font-size: 10px;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: #444; margin-bottom: 10px;
+  }
+  .scroll-track {
+    width: 1px; height: 56px;
+    background: var(--border);
+    margin: 0 auto; position: relative; overflow: hidden;
+  }
+  .scroll-track::after {
+    content: '';
+    position: absolute; top: -100%;
+    width: 1px; height: 50%;
+    background: var(--orange);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown { 0%{top:-50%} 100%{top:150%} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.9; text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .section-rule {
+    width: 48px; height: 2px;
+    background: var(--orange);
+    margin-bottom: 40px;
+  }
+
+  /* NOSOTROS */
+  #nosotros { background: var(--near-black); }
+  .nosotros-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .nosotros-text p {
+    font-size: 17px; line-height: 1.85;
+    color: var(--gray-light); margin-bottom: 20px;
+  }
+  .nosotros-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .stat {
+    padding: 24px; background: var(--near-black);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px; font-weight: 900;
+    color: var(--orange); line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gray);
+    margin-top: 6px;
+  }
+  .nosotros-visual { position: relative; }
+  .showreel-placeholder {
+    width: 100%; aspect-ratio: 16/9;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .showreel-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(245,166,35,0.03) 0%, transparent 60%);
+  }
+  .play-circle {
+    width: 64px; height: 64px;
+    border: 2px solid var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .play-circle svg { width: 22px; height: 22px; fill: var(--orange); margin-left: 4px; }
+  .showreel-placeholder p {
+    font-size: 12px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #444;
+    position: relative; z-index: 1;
+  }
+  .nosotros-badge {
+    position: absolute; top: -20px; right: -20px;
+    background: var(--orange); color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 14px 18px; line-height: 1.3;
+    text-align: center;
+  }
+
+  /* SERVICIOS */
+  #servicios { background: var(--black); }
+  .servicios-inner { max-width: 1200px; margin: 0 auto; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 36px 28px;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--orange);
+    transition: height 0.3s;
+  }
+  .service-card:hover { background: #0d0d0d; }
+  .service-card:hover::before { height: 100%; }
+  .service-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: rgba(245,166,35,0.3); letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .service-icon-wrap {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .service-card:hover .service-icon-wrap { border-color: var(--orange); }
+  .service-icon-wrap svg { width: 20px; height: 20px; stroke: var(--orange); fill: none; stroke-width: 1.5; }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .service-card p { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--near-black); }
+  .portfolio-inner { max-width: 1200px; margin: 0 auto; }
+  .portfolio-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .filter-btn {
+    padding: 8px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gray); cursor: pointer;
+    border-radius: 3px; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--orange); color: var(--orange);
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .portfolio-item {
+    position: relative; overflow: hidden;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .portfolio-item.featured { grid-column: span 2; }
+  .video-wrapper {
+    position: relative; width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0; overflow: hidden;
+    background: #050505;
+  }
+  .video-wrapper iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: none;
+  }
+  .p-meta {
+    padding: 16px 20px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+  }
+  .p-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 15px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .p-cat-tag {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #000; background: var(--orange);
+    padding: 3px 8px; border-radius: 2px;
+  }
+
+  /* EQUIPO */
+  #equipo { background: var(--black); }
+  .equipo-inner { max-width: 1200px; margin: 0 auto; }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .team-card {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--near-black);
+    transition: border-color 0.3s;
+    display: flex; gap: 20px;
+  }
+  .team-card:hover { border-color: rgba(245,166,35,0.3); }
+  .team-avatar {
+    width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 18px;
+    color: var(--orange);
+  }
+  .team-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: 0.03em; margin-bottom: 4px;
+  }
+  .team-role {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 12px;
+  }
+  .team-bio { font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+  /* EXPERIENCIA */
+  #experiencia { background: var(--near-black); }
+  .exp-inner { max-width: 1200px; margin: 0 auto; }
+  .exp-text {
+    font-size: 17px; line-height: 1.85;
+    color: var(--gray-light);
+    max-width: 680px; margin-bottom: 48px;
+  }
+  .clients-wrap {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .client-tag {
+    padding: 9px 18px;
+    border: 1px solid rgba(255,255,255,0.07);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #555; border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .client-tag:hover { border-color: var(--orange); color: var(--white); }
+
+  /* CONTACTO */
+  #contacto { background: var(--black); border-top: 1px solid var(--border); }
+  .contact-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .contact-intro { font-size: 17px; color: var(--gray); line-height: 1.8; margin-bottom: 40px; }
+  .contact-links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 4px; color: var(--gray-light);
+    font-size: 15px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-item:hover { border-color: rgba(245,166,35,0.4); color: var(--white); }
+  .contact-item svg { width: 18px; height: 18px; flex-shrink: 0; stroke: var(--orange); fill: none; stroke-width: 1.5; }
+  .social-row { display: flex; gap: 10px; }
+  .social-btn {
+    width: 42px; height: 42px;
+    border: 1px solid var(--border); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    background: transparent;
+  }
+  .social-btn:hover { border-color: var(--orange); }
+  .social-btn svg { width: 18px; height: 18px; stroke: var(--gray); fill: none; stroke-width: 1.5; transition: stroke 0.2s; }
+  .social-btn:hover svg { stroke: var(--orange); }
+  .contact-form-side { }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #555; margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 13px 16px; font-size: 15px;
+    border-radius: 4px; font-family: 'Barlow', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--orange); }
+  .form-group textarea { height: 120px; resize: vertical; }
+  .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .form-group select option { background: #111; }
+  .btn-submit {
+    width: 100%; padding: 16px;
+    background: var(--orange); color: #000;
+    border: none; font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 16px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    border-radius: 4px; cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .btn-submit:hover { opacity: 0.9; }
+  .btn-submit:active { transform: scale(0.99); }
+  .form-success {
+    display: none;
+    padding: 16px; background: rgba(123,191,181,0.08);
+    border: 1px solid rgba(123,191,181,0.3);
+    border-radius: 4px; color: var(--teal);
+    font-size: 14px; text-align: center;
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--near-black);
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo img { height: 36px; }
+  footer p { font-size: 12px; color: #333; }
+  footer span { color: var(--orange); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 72px 20px; }
+    .nosotros-grid, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item.featured { grid-column: span 1; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero-h1 { font-size: 60px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">
+    <img src="logo.png" alt="Alta Secuencia">
+  </a>
+  <div class="nav-links">
+    <a href="#nosotros" data-i18n="nav_about">Nosotros</a>
+    <a href="#servicios" data-i18n="nav_services">Servicios</a>
+    <a href="#portfolio" data-i18n="nav_portfolio">Portfolio</a>
+    <a href="#equipo" data-i18n="nav_team">Equipo</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#contacto" class="nav-cta" data-i18n="nav_cta">Contacto</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" data-i18n="hero_eyebrow">Productora Audiovisual · Buenos Aires</div>
+    <h1 class="hero-h1">ALTA<br><em>SECUENCIA</em></h1>
+    <p class="hero-tagline" data-i18n="hero_tagline">10 años creando imágenes que perduran</p>
+    <a href="#portfolio" class="hero-btn">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+      <span data-i18n="hero_btn">Ver nuestro trabajo</span>
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span data-i18n="hero_scroll">Scroll</span>
+    <div class="scroll-track"></div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="nosotros-grid">
+    <div class="nosotros-text">
+      <div class="section-label" data-i18n="about_label">Nosotros</div>
+      <div class="section-title" data-i18n="about_title">QUIÉNES<br>SOMOS</div>
+      <div class="section-rule"></div>
+      <p data-i18n="about_p1">Somos una productora audiovisual con 10 años de experiencia, caracterizados por la versatilidad para adaptarnos a cualquier tamaño de producción según la necesidad del cliente.</p>
+      <p data-i18n="about_p2">Nos especializamos en la creación de contenido para redes sociales, videoclips, cursos online, charlas y videos institucionales. Contamos con amplia experiencia en cobertura fotográfica de eventos y grabación de shows en vivo.</p>
+      <div class="nosotros-stats">
+        <div class="stat"><div class="stat-num">10</div><div class="stat-label" data-i18n="stat1">Años de experiencia</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label" data-i18n="stat2">Realizadores</div></div>
+        <div class="stat"><div class="stat-num">12+</div><div class="stat-label" data-i18n="stat3">Clientes destacados</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label" data-i18n="stat4">Proyectos realizados</div></div>
+      </div>
+    </div>
+    <div class="nosotros-visual">
+      <div class="nosotros-badge" data-i18n="about_badge">10 AÑOS<br>DE TRAYECTORIA</div>
+      <div class="showreel-placeholder">
+        <div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div>
+        <p data-i18n="showreel_label">Showreel — próximamente</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="servicios-inner">
+    <div class="section-label" data-i18n="services_label">Lo que hacemos</div>
+    <div class="section-title" data-i18n="services_title">SERVICIOS</div>
+    <div class="section-rule"></div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg></div>
+        <h3 data-i18n="s1_title">Videoclips</h3>
+        <p data-i18n="s1_desc">Proyectos artísticos y videos musicales con dirección creativa de alto nivel.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3 data-i18n="s2_title">Institucional & Corporativo</h3>
+        <p data-i18n="s2_desc">Videos corporativos, spots publicitarios y contenido para empresas y marcas.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3 data-i18n="s3_title">Registro multicámara</h3>
+        <p data-i18n="s3_desc">Cobertura de shows en vivo, teatro y eventos con múltiples cámaras.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <h3 data-i18n="s4_title">Fotografía profesional</h3>
+        <p data-i18n="s4_desc">Retratos corporativos, fotografía de producto, campañas y cobertura de eventos.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div>
+        <h3 data-i18n="s5_title">Cursos online & Podcast</h3>
+        <p data-i18n="s5_desc">Realización de cursos online, podcast y streaming en vivo.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3 data-i18n="s6_title">Motion Graphics & Post</h3>
+        <p data-i18n="s6_desc">Motion graphics, post-producción, color grading y diseño de audio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-inner">
+    <div class="section-label" data-i18n="portfolio_label">Trabajos seleccionados</div>
+    <div class="section-title" data-i18n="portfolio_title">PORTFOLIO</div>
+    <div class="section-rule"></div>
+    <div class="portfolio-filters">
+      <button class="filter-btn active" onclick="filterPF('all',this)" data-i18n="pf_all">Todo</button>
+      <button class="filter-btn" onclick="filterPF('musica',this)" data-i18n="pf_music">Música</button>
+      <button class="filter-btn" onclick="filterPF('institucional',this)" data-i18n="pf_inst">Institucional</button>
+      <button class="filter-btn" onclick="filterPF('eventos',this)" data-i18n="pf_events">Eventos</button>
+      <button class="filter-btn" onclick="filterPF('gastronomia',this)" data-i18n="pf_gastro">Gastronomía</button>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-item featured" data-cat="musica">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Xz9qBuLpB_I?rel=0&modestbranding=1&color=white" loading="lazy" allowfullscreen title="Alta Secuencia — Video 1"></iframe>
+        </div>
+        <div class="p-meta">
+          <span class="p-title" data-i18n="v1_title">Chocolate Remix</span>
+          <span class="p-cat-tag" data-i18n="pf_music">Música</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-cat="institucional">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/Ln5Q73bTEfI?rel=0&modestbranding=1&color=white" loading="lazy" allowfullscreen title="Alta Secuencia — Video 2"></iframe>
+        </div>
+        <div class="p-meta">
+          <span class="p-title" data-i18n="v2_title">Institucional</span>
+          <span class="p-cat-tag" data-i18n="pf_inst">Institucional</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-cat="eventos">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/HzySRjH1Ivo?rel=0&modestbranding=1&color=white" loading="lazy" allowfullscreen title="Alta Secuencia — Video 3"></iframe>
+        </div>
+        <div class="p-meta">
+          <span class="p-title" data-i18n="v3_title">Evento en vivo</span>
+          <span class="p-cat-tag" data-i18n="pf_events">Eventos</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-cat="musica">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/r5u1EXd7rfw?rel=0&modestbranding=1&color=white" loading="lazy" allowfullscreen title="Alta Secuencia — Video 4"></iframe>
+        </div>
+        <div class="p-meta">
+          <span class="p-title" data-i18n="v4_title">Videoclip</span>
+          <span class="p-cat-tag" data-i18n="pf_music">Música</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-cat="institucional">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/wR06NjHW50Y?rel=0&modestbranding=1&color=white" loading="lazy" allowfullscreen title="Alta Secuencia — Video 5"></iframe>
+        </div>
+        <div class="p-meta">
+          <span class="p-title" data-i18n="v5_title">Producción corporativa</span>
+          <span class="p-cat-tag" data-i18n="pf_inst">Institucional</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="equipo-inner">
+    <div class="section-label" data-i18n="team_label">El equipo</div>
+    <div class="section-title" data-i18n="team_title">REALIZADORES</div>
+    <div class="section-rule"></div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">EM</div>
+        <div>
+          <div class="team-name">Eugenio Martinez</div>
+          <div class="team-role" data-i18n="t1_role">Director de Fotografía</div>
+          <p class="team-bio" data-i18n="t1_bio">Diseñador de Imagen y Sonido, co-fundador de Alta Secuencia. Asistente de cámara en series de ficción, publicidad y largometrajes.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">JC</div>
+        <div>
+          <div class="team-name">Juan Jesús Castro</div>
+          <div class="team-role" data-i18n="t2_role">Director & Fotógrafo</div>
+          <p class="team-bio" data-i18n="t2_bio">Dis. Imagen y Sonido UBA. Co-fundador, director y fotógrafo freelance. Editor en TV Pública. Especializado en eventos en vivo y fotografía de moda.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">JR</div>
+        <div>
+          <div class="team-name">Johanna Raño Figuerola</div>
+          <div class="team-role" data-i18n="t3_role">Directora de Arte & Productora</div>
+          <p class="team-bio" data-i18n="t3_bio">Diseñadora de Imagen y Sonido UBA. Filmmaker especializada en música en vivo y estudio. Columnista de cine en Frecuencia Zero.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">PL</div>
+        <div>
+          <div class="team-name">Pablo Lecaros</div>
+          <div class="team-role" data-i18n="t4_role">Realizador & Guionista</div>
+          <p class="team-bio" data-i18n="t4_bio">Realizador, Fotógrafo y Guionista. Formado en ENERC y UBA. Dirigió proyectos para Canal Encuentro y TV Pública. Activo en cine, TV y publicidad.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">TR</div>
+        <div>
+          <div class="team-name">Tomás Ramovecchi</div>
+          <div class="team-role" data-i18n="t5_role">Producción</div>
+          <p class="team-bio" data-i18n="t5_bio">Lic. en Comunicación, Periodista y Productor Periodístico en el Noticiero Central de la Televisión Pública.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="exp-inner">
+    <div class="section-label" data-i18n="exp_label">Trayectoria</div>
+    <div class="section-title" data-i18n="exp_title">EXPERIENCIA</div>
+    <div class="section-rule"></div>
+    <p class="exp-text" data-i18n="exp_text">Trabajamos con artistas, marcas, instituciones y teatros de toda Argentina. Nuestra trayectoria incluye festivales de música, obras de la calle Corrientes, marcas gastronómicas y canales nacionales.</p>
+    <div class="clients-wrap">
+      <div class="client-tag">Universal Music Argentina</div>
+      <div class="client-tag">TV Pública</div>
+      <div class="client-tag">Disney on Ice</div>
+      <div class="client-tag">Teatro Vorterix</div>
+      <div class="client-tag">Amnistía Internacional</div>
+      <div class="client-tag">Canal Encuentro</div>
+      <div class="client-tag">CACE</div>
+      <div class="client-tag">Museo MARCO</div>
+      <div class="client-tag">Teatro Broadway</div>
+      <div class="client-tag">Teatro Apolo</div>
+      <div class="client-tag">Teatro Premier</div>
+      <div class="client-tag">Café Berlin</div>
+      <div class="client-tag">Rock en Baradero</div>
+      <div class="client-tag">Chocolate Remix</div>
+      <div class="client-tag">Rochi Igarzabal</div>
+      <div class="client-tag">Malcriada</div>
+      <div class="client-tag">Zeta Wine Bar</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label" data-i18n="contact_label">Hablemos</div>
+      <div class="section-title" data-i18n="contact_title">CONTACTO</div>
+      <div class="section-rule"></div>
+      <p class="contact-intro" data-i18n="contact_intro">Contanos tu próximo proyecto. Nos adaptamos a cualquier escala de producción.</p>
+      <div class="contact-links">
+        <a href="tel:+5491137334233" class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.36-.36a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Juan — 11 3733-4233
+        </a>
+        <a href="tel:+5491160250972" class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.36-.36a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Eugenio — 11 6025-0972
+        </a>
+        <a href="mailto:contactoaltasecuencia@gmail.com" class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          contactoaltasecuencia@gmail.com
+        </a>
+        <a href="https://www.instagram.com/altasecuencia" target="_blank" rel="noopener" class="contact-item">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#F5A623" stroke="none"/></svg>
+          @altasecuencia
+        </a>
+      </div>
+      <div class="social-row">
+        <a href="https://www.instagram.com/altasecuencia" target="_blank" rel="noopener" class="social-btn" title="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener" class="social-btn" title="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form-side">
+      <div class="form-group">
+        <label data-i18n="form_name">Nombre</label>
+        <input type="text" id="f-name" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_email">Email</label>
+        <input type="email" id="f-email" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_service">Servicio</label>
+        <select id="f-service">
+          <option value="" data-i18n="form_select">— Seleccioná un servicio —</option>
+          <option>Videoclip</option>
+          <option>Video institucional / corporativo</option>
+          <option>Spot publicitario</option>
+          <option>Fotografía profesional</option>
+          <option>Registro de evento</option>
+          <option>Curso online / Podcast</option>
+          <option>Motion Graphics / Post-producción</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-i18n="form_msg">Mensaje</label>
+        <textarea id="f-msg" placeholder="Contanos tu proyecto..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()" data-i18n="form_submit">Enviar mensaje</button>
+      <div class="form-success" id="form-ok">✓ <span data-i18n="form_sent">Mensaje enviado. Te contactamos pronto.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><img src="logo.png" alt="Alta Secuencia"></div>
+  <p>© 2025 Alta Secuencia. <span>@altasecuencia</span></p>
+  <p>Buenos Aires, Argentina</p>
+</footer>
+
+<script>
+// ── CURSOR
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
+animRing();
+document.querySelectorAll('a,button,.filter-btn,.client-tag,.service-card,.team-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('hovering'));
+});
+
+// ── NAV SCROLL
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── LANG
+const t = {
+  es:{
+    nav_about:'Nosotros',nav_services:'Servicios',nav_portfolio:'Portfolio',nav_team:'Equipo',nav_cta:'Contacto',
+    hero_eyebrow:'Productora Audiovisual · Buenos Aires',hero_tagline:'10 años creando imágenes que perduran',hero_btn:'Ver nuestro trabajo',hero_scroll:'Scroll',
+    about_label:'Nosotros',about_title:'QUIÉNES\nSOmos',about_p1:'Somos una productora audiovisual con 10 años de experiencia, caracterizados por la versatilidad para adaptarnos a cualquier tamaño de producción según la necesidad del cliente.',about_p2:'Nos especializamos en la creación de contenido para redes sociales, videoclips, cursos online, charlas y videos institucionales. Contamos con amplia experiencia en cobertura fotográfica de eventos y grabación de shows en vivo.',
+    stat1:'Años de experiencia',stat2:'Realizadores',stat3:'Clientes destacados',stat4:'Proyectos realizados',
+    about_badge:'10 AÑOS\nDE TRAYECTORIA',showreel_label:'Showreel — próximamente',
+    services_label:'Lo que hacemos',services_title:'SERVICIOS',
+    s1_title:'Videoclips',s1_desc:'Proyectos artísticos y videos musicales con dirección creativa de alto nivel.',
+    s2_title:'Institucional & Corporativo',s2_desc:'Videos corporativos, spots publicitarios y contenido para empresas y marcas.',
+    s3_title:'Registro multicámara',s3_desc:'Cobertura de shows en vivo, teatro y eventos con múltiples cámaras.',
+    s4_title:'Fotografía profesional',s4_desc:'Retratos corporativos, fotografía de producto, campañas y cobertura de eventos.',
+    s5_title:'Cursos online & Podcast',s5_desc:'Realización de cursos online, podcast y streaming en vivo.',
+    s6_title:'Motion Graphics & Post',s6_desc:'Motion graphics, post-producción, color grading y diseño de audio.',
+    portfolio_label:'Trabajos seleccionados',portfolio_title:'PORTFOLIO',
+    pf_all:'Todo',pf_music:'Música',pf_inst:'Institucional',pf_events:'Eventos',pf_gastro:'Gastronomía',
+    v1_title:'Chocolate Remix',v2_title:'Institucional',v3_title:'Evento en vivo',v4_title:'Videoclip',v5_title:'Producción corporativa',
+    team_label:'El equipo',team_title:'REALIZADORES',
+    t1_role:'Director de Fotografía',t1_bio:'Diseñador de Imagen y Sonido, co-fundador de Alta Secuencia. Asistente de cámara en series de ficción, publicidad y largometrajes.',
+    t2_role:'Director & Fotógrafo',t2_bio:'Dis. Imagen y Sonido UBA. Co-fundador, director y fotógrafo freelance. Editor en TV Pública. Especializado en eventos en vivo y fotografía de moda.',
+    t3_role:'Directora de Arte & Productora',t3_bio:'Diseñadora de Imagen y Sonido UBA. Filmmaker especializada en música en vivo y estudio. Columnista de cine en Frecuencia Zero.',
+    t4_role:'Realizador & Guionista',t4_bio:'Realizador, Fotógrafo y Guionista. Formado en ENERC y UBA. Dirigió proyectos para Canal Encuentro y TV Pública.',
+    t5_role:'Producción',t5_bio:'Lic. en Comunicación, Periodista y Productor Periodístico en el Noticiero Central de la Televisión Pública.',
+    exp_label:'Trayectoria',exp_title:'EXPERIENCIA',exp_text:'Trabajamos con artistas, marcas, instituciones y teatros de toda Argentina. Nuestra trayectoria incluye festivales de música, obras de la calle Corrientes, marcas gastronómicas y canales nacionales.',
+    contact_label:'Hablemos',contact_title:'CONTACTO',contact_intro:'Contanos tu próximo proyecto. Nos adaptamos a cualquier escala de producción.',
+    form_name:'Nombre',form_email:'Email',form_service:'Servicio',form_select:'— Seleccioná un servicio —',form_msg:'Mensaje',form_submit:'Enviar mensaje',form_sent:'Mensaje enviado. Te contactamos pronto.'
+  },
+  en:{
+    nav_about:'About',nav_services:'Services',nav_portfolio:'Portfolio',nav_team:'Team',nav_cta:'Contact',
+    hero_eyebrow:'Audiovisual Production · Buenos Aires',hero_tagline:'10 years crafting images that endure',hero_btn:'See our work',hero_scroll:'Scroll',
+    about_label:'About us',about_title:'WHO\nWE ARE',about_p1:'We are an audiovisual production company with 10 years of experience, known for our versatility to adapt to any production scale according to our clients\' needs.',about_p2:'We specialize in content creation for social media, music videos, online courses, talks and corporate videos, with extensive experience in event photography and live show recording.',
+    stat1:'Years of experience',stat2:'Filmmakers',stat3:'Notable clients',stat4:'Projects delivered',
+    about_badge:'10 YEARS\nOF EXPERIENCE',showreel_label:'Showreel — coming soon',
+    services_label:'What we do',services_title:'SERVICES',
+    s1_title:'Music Videos',s1_desc:'Artistic projects and music videos with high-level creative direction.',
+    s2_title:'Corporate & Institutional',s2_desc:'Corporate videos, commercials and content for companies and brands.',
+    s3_title:'Multi-camera coverage',s3_desc:'Live shows, theater and events coverage with multiple cameras.',
+    s4_title:'Professional Photography',s4_desc:'Corporate portraits, product photography, campaigns and events.',
+    s5_title:'Online Courses & Podcast',s5_desc:'Online course production, podcast and live streaming.',
+    s6_title:'Motion Graphics & Post',s6_desc:'Motion graphics, post-production, color grading and audio design.',
+    portfolio_label:'Selected works',portfolio_title:'PORTFOLIO',
+    pf_all:'All',pf_music:'Music',pf_inst:'Corporate',pf_events:'Events',pf_gastro:'Gastronomy',
+    v1_title:'Chocolate Remix',v2_title:'Corporate',v3_title:'Live event',v4_title:'Music video',v5_title:'Corporate production',
+    team_label:'The team',team_title:'FILMMAKERS',
+    t1_role:'Director of Photography',t1_bio:'Image & Sound Designer, Alta Secuencia co-founder. Camera assistant on fiction series, advertising and feature films.',
+    t2_role:'Director & Photographer',t2_bio:'Image & Sound Designer UBA. Co-founder, freelance director and photographer. Editor at TV Pública. Specialized in live events and fashion photography.',
+    t3_role:'Art Director & Producer',t3_bio:'Image & Sound Designer UBA. Filmmaker specialized in live and studio music. Film columnist at Frecuencia Zero.',
+    t4_role:'Filmmaker & Screenwriter',t4_bio:'Filmmaker, Photographer and Screenwriter. Trained at ENERC and UBA. Directed projects for Canal Encuentro and TV Pública.',
+    t5_role:'Production',t5_bio:'BA in Communication, Journalist and News Producer at the Central Newscast of Televisión Pública.',
+    exp_label:'Track record',exp_title:'EXPERIENCE',exp_text:'We work with artists, brands, institutions and theaters across Argentina. Our history spans music festivals, Buenos Aires theater, gastronomy brands and national broadcast channels.',
+    contact_label:"Let's talk",contact_title:'CONTACT',contact_intro:"Tell us about your next project. We adapt to any production scale.",
+    form_name:'Name',form_email:'Email',form_service:'Service',form_select:'— Select a service —',form_msg:'Message',form_submit:'Send message',form_sent:'Message sent. We\'ll be in touch soon.'
+  }
+};
+function setLang(l){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t[l]&&t[l][k]) el.textContent=t[l][k];
+  });
+  document.documentElement.lang=l;
+}
+
+// ── PORTFOLIO FILTER
+function filterPF(cat, btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.portfolio-item').forEach(item=>{
+    const show = cat==='all' || item.dataset.cat===cat;
+    item.style.display = show ? 'block' : 'none';
+    if(show && cat==='all' && item.classList.contains('featured')) item.style.gridColumn='span 2';
+    else if(show) item.style.gridColumn='span 1';
+  });
+}
+
+// ── FORM
+function submitForm(){
+  const n=document.getElementById('f-name').value.trim();
+  const e=document.getElementById('f-email').value.trim();
+  const m=document.getElementById('f-msg').value.trim();
+  if(!n||!e||!m){
+    alert('Por favor completá nombre, email y mensaje.');
+    return;
+  }
+  // Formspree: reemplazar ACTION_URL con tu endpoint de formspree.io
+  // fetch('https://formspree.io/f/ACTION_URL', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name:n,email:e,message:m})})
+  document.getElementById('form-ok').style.display='block';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-msg').value='';
+  document.getElementById('f-service').selectedIndex=0;
+  setTimeout(()=>document.getElementById('form-ok').style.display='none',5000);
+}
+
+// ── SCROLL REVEAL (Intersection Observer)
+const reveals = document.querySelectorAll('section, .service-card, .team-card, .portfolio-item');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+},{threshold:0.08});
+reveals.forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(32px)';
+  el.style.transition='opacity 0.7s ease, transform 0.7s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
