@@ -491,7 +491,7 @@
   /* MARQUEE */
   .marquee-section {
     background: var(--orange);
-    padding: 36px 0;
+    padding: 28px 0;
     position: relative;
     overflow: hidden;
   }
@@ -527,17 +527,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 44px;
+    padding: 0 36px;
     flex-shrink: 0;
     border-right: 1px solid rgba(0,0,0,0.12);
   }
   .marquee-item img {
-    height: 80px;
+    height: 100px;
     width: auto;
-    max-width: 180px;
+    max-width: 200px;
     object-fit: contain;
     filter: brightness(0);
-    opacity: 0.82;
+    opacity: 0.85;
     transition: opacity 0.3s;
   }
   .marquee-item:hover img { opacity: 1; }
@@ -670,6 +670,15 @@
     .team-grid { grid-template-columns: 1fr; }
     .hero-h1 { font-size: 60px; }
     footer { flex-direction: column; gap: 16px; text-align: center; }
+    .stats-band {
+      padding: 0 20px 60px;
+    }
+    .stats-band .nosotros-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-num { font-size: 40px; }
+    .marquee-item img { height: 72px; max-width: 140px; }
+    .marquee-item { padding: 0 24px; }
   }
 </style>
 </head>
