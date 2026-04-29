@@ -71,11 +71,28 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
   .nav-logo img {
-    height: 44px;
+    height: 52px;
     width: auto;
     display: block;
+    flex-shrink: 0;
   }
+  .nav-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+  }
+  .nav-logo-text span { color: var(--orange); }
   .nav-links {
     display: flex; align-items: center; gap: 32px;
   }
@@ -146,7 +163,15 @@
   @keyframes gridDrift { 0%{background-position:0 0} 100%{background-position:80px 80px} }
 
   .hero-content { position: relative; z-index: 2; }
-  .hero-eyebrow {
+  .hero-logo {
+    width: 140px;
+    height: auto;
+    margin: 0 auto 32px;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+    filter: drop-shadow(0 0 32px rgba(245,166,35,0.25));
+  }
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 12px; font-weight: 600;
     letter-spacing: 0.35em; text-transform: uppercase;
@@ -460,21 +485,83 @@
   .exp-text {
     font-size: 17px; line-height: 1.85;
     color: var(--gray-light);
-    max-width: 680px; margin-bottom: 48px;
+    max-width: 680px; margin-bottom: 0;
   }
-  .clients-wrap {
-    display: flex; flex-wrap: wrap; gap: 10px;
+
+  /* MARQUEE */
+  .marquee-section {
+    background: var(--near-black);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
   }
-  .client-tag {
-    padding: 9px 18px;
-    border: 1px solid rgba(255,255,255,0.07);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600; font-size: 13px;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: #555; border-radius: 3px;
-    transition: all 0.2s;
+  .marquee-fade-left,
+  .marquee-fade-right {
+    position: absolute; top: 0; bottom: 0;
+    width: 120px; z-index: 2; pointer-events: none;
   }
-  .client-tag:hover { border-color: var(--orange); color: var(--white); }
+  .marquee-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--near-black), transparent);
+  }
+  .marquee-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--near-black), transparent);
+  }
+  .marquee-track {
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    animation: marqueeScroll 32s linear infinite;
+  }
+  .marquee-inner:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 48px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+  }
+  .marquee-item img {
+    height: 56px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.35;
+    transition: opacity 0.3s, filter 0.3s;
+  }
+  .marquee-item:hover img {
+    opacity: 1;
+    filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg);
+  }
+
+  /* STATS BAND */
+  .stats-band {
+    background: var(--black);
+    padding: 0 48px 80px;
+  }
+  .stats-band .nosotros-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
   /* CONTACTO */
   #contacto { background: var(--black); border-top: 1px solid var(--border); }
@@ -558,7 +645,22 @@
     padding: 28px 48px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .footer-logo img { height: 36px; }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-logo img { height: 52px; }
+  .footer-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+  }
+  .footer-logo-text span { color: var(--orange); }
   footer p { font-size: 12px; color: #333; }
   footer span { color: var(--orange); }
 
@@ -586,6 +688,7 @@
 <nav id="mainNav">
   <a href="#hero" class="nav-logo">
     <img src="logo.png" alt="Alta Secuencia">
+    <div class="nav-logo-text">ALTA<br><span>SECUENCIA</span></div>
   </a>
   <div class="nav-links">
     <a href="#nosotros" data-i18n="nav_about">Nosotros</a>
@@ -607,6 +710,7 @@
   <div class="hero-noise"></div>
   <div class="hero-lines"></div>
   <div class="hero-content">
+    <img src="logo.png" alt="Alta Secuencia" class="hero-logo">
     <div class="hero-eyebrow" data-i18n="hero_eyebrow">Productora Audiovisual · Buenos Aires</div>
     <h1 class="hero-h1">ALTA<br><em>SECUENCIA</em></h1>
     <p class="hero-tagline" data-i18n="hero_tagline">10 años creando imágenes que perduran</p>
@@ -630,12 +734,6 @@
       <div class="section-rule"></div>
       <p data-i18n="about_p1">Somos una productora audiovisual con 10 años de experiencia, caracterizados por la versatilidad para adaptarnos a cualquier tamaño de producción según la necesidad del cliente.</p>
       <p data-i18n="about_p2">Nos especializamos en la creación de contenido para redes sociales, videoclips, cursos online, charlas y videos institucionales. Contamos con amplia experiencia en cobertura fotográfica de eventos y grabación de shows en vivo.</p>
-      <div class="nosotros-stats">
-        <div class="stat"><div class="stat-num">10</div><div class="stat-label" data-i18n="stat1">Años de experiencia</div></div>
-        <div class="stat"><div class="stat-num">4</div><div class="stat-label" data-i18n="stat2">Realizadores</div></div>
-        <div class="stat"><div class="stat-num">12+</div><div class="stat-label" data-i18n="stat3">Clientes destacados</div></div>
-        <div class="stat"><div class="stat-num">∞</div><div class="stat-label" data-i18n="stat4">Proyectos realizados</div></div>
-      </div>
     </div>
     <div class="nosotros-visual">
       <div class="nosotros-badge" data-i18n="about_badge">10 AÑOS<br>DE TRAYECTORIA</div>
@@ -821,27 +919,42 @@
     <div class="section-title" data-i18n="exp_title">EXPERIENCIA</div>
     <div class="section-rule"></div>
     <p class="exp-text" data-i18n="exp_text">Trabajamos con artistas, marcas, instituciones y teatros de toda Argentina. Nuestra trayectoria incluye festivales de música, obras de la calle Corrientes, marcas gastronómicas y canales nacionales.</p>
-    <div class="clients-wrap">
-      <div class="client-tag">Universal Music Argentina</div>
-      <div class="client-tag">TV Pública</div>
-      <div class="client-tag">Disney on Ice</div>
-      <div class="client-tag">Teatro Vorterix</div>
-      <div class="client-tag">Amnistía Internacional</div>
-      <div class="client-tag">Canal Encuentro</div>
-      <div class="client-tag">CACE</div>
-      <div class="client-tag">Museo MARCO</div>
-      <div class="client-tag">Teatro Broadway</div>
-      <div class="client-tag">Teatro Apolo</div>
-      <div class="client-tag">Teatro Premier</div>
-      <div class="client-tag">Café Berlin</div>
-      <div class="client-tag">Rock en Baradero</div>
-      <div class="client-tag">Chocolate Remix</div>
-      <div class="client-tag">Rochi Igarzabal</div>
-      <div class="client-tag">Malcriada</div>
-      <div class="client-tag">Zeta Wine Bar</div>
-    </div>
   </div>
 </section>
+
+<!-- MARQUEE DE LOGOS -->
+<div class="marquee-section">
+  <div class="marquee-fade-left"></div>
+  <div class="marquee-fade-right"></div>
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-inner" id="marqueeInner">
+      <div class="marquee-item"><img src="logos/tvp.svg" alt="TV Pública"></div>
+      <div class="marquee-item"><img src="logos/universal_music_argentina.svg" alt="Universal Music Argentina"></div>
+      <div class="marquee-item"><img src="logos/canal_encuentro.svg" alt="Canal Encuentro"></div>
+      <div class="marquee-item"><img src="logos/disney_on_ice.svg" alt="Disney on Ice"></div>
+      <div class="marquee-item"><img src="logos/vorterix.svg" alt="Teatro Vorterix"></div>
+      <div class="marquee-item"><img src="logos/amnistia.svg" alt="Amnistía Internacional"></div>
+      <div class="marquee-item"><img src="logos/cace.svg" alt="CACE"></div>
+      <div class="marquee-item"><img src="logos/cafe_berlin.svg" alt="Café Berlín"></div>
+      <div class="marquee-item"><img src="logos/rock_en_baradero.svg" alt="Rock en Baradero"></div>
+      <div class="marquee-item"><img src="logos/teatro_apolo.svg" alt="Teatro Apolo"></div>
+      <div class="marquee-item"><img src="logos/teatro_broadway.svg" alt="Teatro Broadway"></div>
+      <div class="marquee-item"><img src="logos/teatro_premier.svg" alt="Teatro Premier"></div>
+      <div class="marquee-item"><img src="logos/malcriada.svg" alt="Malcriada"></div>
+      <div class="marquee-item"><img src="logos/zeta_wine_bar.svg" alt="Zeta Wine Bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS (debajo del marquee) -->
+<div class="stats-band">
+  <div class="nosotros-stats">
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label" data-i18n="stat1">Años de experiencia</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label" data-i18n="stat2">Realizadores</div></div>
+    <div class="stat"><div class="stat-num">14+</div><div class="stat-label" data-i18n="stat3">Clientes destacados</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label" data-i18n="stat4">Proyectos realizados</div></div>
+  </div>
+</div>
 
 <!-- CONTACTO -->
 <section id="contacto">
@@ -913,12 +1026,23 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><img src="logo.png" alt="Alta Secuencia"></div>
+  <div class="footer-logo">
+    <img src="logo.png" alt="Alta Secuencia">
+    <div class="footer-logo-text">ALTA<br><span>SECUENCIA</span></div>
+  </div>
   <p>© 2025 Alta Secuencia. <span>@altasecuencia</span></p>
   <p>Buenos Aires, Argentina</p>
 </footer>
 
 <script>
+// ── MARQUEE — duplicate items for seamless loop
+(function(){
+  const inner = document.getElementById('marqueeInner');
+  if(!inner) return;
+  const clone = inner.cloneNode(true);
+  inner.parentNode.appendChild(clone);
+})();
+
 // ── CURSOR
 const cur = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
