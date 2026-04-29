@@ -164,13 +164,13 @@
 
   .hero-content { position: relative; z-index: 2; }
   .hero-logo {
-    width: 140px;
+    width: 220px;
     height: auto;
-    margin: 0 auto 32px;
+    margin: 0 auto 24px;
     display: block;
     opacity: 0;
     animation: fadeUp 0.8s 0.2s forwards;
-    filter: drop-shadow(0 0 32px rgba(245,166,35,0.25));
+    filter: drop-shadow(0 0 48px rgba(245,166,35,0.35));
   }
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 12px; font-weight: 600;
@@ -490,25 +490,23 @@
 
   /* MARQUEE */
   .marquee-section {
-    background: var(--near-black);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 40px 0;
+    background: var(--orange);
+    padding: 36px 0;
     position: relative;
     overflow: hidden;
   }
   .marquee-fade-left,
   .marquee-fade-right {
     position: absolute; top: 0; bottom: 0;
-    width: 120px; z-index: 2; pointer-events: none;
+    width: 100px; z-index: 2; pointer-events: none;
   }
   .marquee-fade-left {
     left: 0;
-    background: linear-gradient(to right, var(--near-black), transparent);
+    background: linear-gradient(to right, var(--orange), transparent);
   }
   .marquee-fade-right {
     right: 0;
-    background: linear-gradient(to left, var(--near-black), transparent);
+    background: linear-gradient(to left, var(--orange), transparent);
   }
   .marquee-track {
     overflow: hidden;
@@ -517,9 +515,8 @@
   .marquee-inner {
     display: flex;
     align-items: center;
-    gap: 0;
     width: max-content;
-    animation: marqueeScroll 32s linear infinite;
+    animation: marqueeScroll 36s linear infinite;
   }
   .marquee-inner:hover { animation-play-state: paused; }
   @keyframes marqueeScroll {
@@ -530,23 +527,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 48px;
+    padding: 0 44px;
     flex-shrink: 0;
-    border-right: 1px solid var(--border);
+    border-right: 1px solid rgba(0,0,0,0.12);
   }
   .marquee-item img {
-    height: 56px;
+    height: 52px;
     width: auto;
-    max-width: 140px;
+    max-width: 130px;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.35;
-    transition: opacity 0.3s, filter 0.3s;
+    filter: brightness(0);
+    opacity: 0.75;
+    transition: opacity 0.3s;
   }
-  .marquee-item:hover img {
-    opacity: 1;
-    filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg);
-  }
+  .marquee-item:hover img { opacity: 1; }
 
   /* STATS BAND */
   .stats-band {
@@ -687,7 +681,7 @@
 <!-- NAV -->
 <nav id="mainNav">
   <a href="#hero" class="nav-logo">
-    <img src="logo.png" alt="Alta Secuencia">
+    <img src="logo_transparent.png" alt="Alta Secuencia">
     <div class="nav-logo-text">ALTA<br><span>SECUENCIA</span></div>
   </a>
   <div class="nav-links">
@@ -710,7 +704,7 @@
   <div class="hero-noise"></div>
   <div class="hero-lines"></div>
   <div class="hero-content">
-    <img src="logo.png" alt="Alta Secuencia" class="hero-logo">
+    <img src="logo_transparent.png" alt="Alta Secuencia" class="hero-logo">
     <div class="hero-eyebrow" data-i18n="hero_eyebrow">Productora Audiovisual · Buenos Aires</div>
     <h1 class="hero-h1">ALTA<br><em>SECUENCIA</em></h1>
     <p class="hero-tagline" data-i18n="hero_tagline">10 años creando imágenes que perduran</p>
@@ -1027,7 +1021,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="logo.png" alt="Alta Secuencia">
+    <img src="logo_transparent.png" alt="Alta Secuencia">
     <div class="footer-logo-text">ALTA<br><span>SECUENCIA</span></div>
   </div>
   <p>© 2025 Alta Secuencia. <span>@altasecuencia</span></p>
@@ -1035,12 +1029,17 @@
 </footer>
 
 <script>
-// ── MARQUEE — duplicate items for seamless loop
+// ── MARQUEE — duplicate items inside single inner for seamless loop
 (function(){
   const inner = document.getElementById('marqueeInner');
   if(!inner) return;
-  const clone = inner.cloneNode(true);
-  inner.parentNode.appendChild(clone);
+  // Clone all children (the 14 items) and append to same inner
+  // So inner has 28 items total; CSS animates to -50% = back to start
+  const items = Array.from(inner.children);
+  items.forEach(item => {
+    const clone = item.cloneNode(true);
+    inner.appendChild(clone);
+  });
 })();
 
 // ── CURSOR
