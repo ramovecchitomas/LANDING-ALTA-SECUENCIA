@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Alta Secuencia — Productora audiovisual con 10 años de experiencia en Buenos Aires. Videoclips, contenido institucional, fotografía y más.">
+<meta name="description" content="Alta Secuencia — Productora audiovisual con 10 años de experiencia en Buenos Aires. Videoclips, contenido institucional, fotografía, podcast y más.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="favicon-192.png">
+
+<!-- Open Graph — preview al compartir en redes y WhatsApp -->
+<meta property="og:title" content="Alta Secuencia — Productora Audiovisual">
+<meta property="og:description" content="10 años creando imágenes que perduran. Videoclips, institucionales, fotografía, eventos y más. Buenos Aires.">
+<meta property="og:image" content="og-image.jpg">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alta Secuencia — Productora Audiovisual">
+<meta name="twitter:description" content="10 años creando imágenes que perduran. Buenos Aires.">
+<meta name="twitter:image" content="og-image.jpg">
 <title>Alta Secuencia — Productora Audiovisual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1144,23 +1159,53 @@ function filterPF(cat, btn){
   });
 }
 
-// ── FORM
-function submitForm(){
-  const n=document.getElementById('f-name').value.trim();
-  const e=document.getElementById('f-email').value.trim();
-  const m=document.getElementById('f-msg').value.trim();
-  if(!n||!e||!m){
+// ── FORM — Formspree
+async function submitForm(){
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const service = document.getElementById('f-service').value;
+  const msg     = document.getElementById('f-msg').value.trim();
+
+  if(!name || !email || !msg){
     alert('Por favor completá nombre, email y mensaje.');
     return;
   }
-  // Formspree: reemplazar ACTION_URL con tu endpoint de formspree.io
-  // fetch('https://formspree.io/f/ACTION_URL', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name:n,email:e,message:m})})
-  document.getElementById('form-ok').style.display='block';
-  document.getElementById('f-name').value='';
-  document.getElementById('f-email').value='';
-  document.getElementById('f-msg').value='';
-  document.getElementById('f-service').selectedIndex=0;
-  setTimeout(()=>document.getElementById('form-ok').style.display='none',5000);
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  // ⚠️  REEMPLAZÁ "FORMSPREE_ID" con tu ID real de formspree.io/new
+  // Ejemplo: https://formspree.io/f/xpwzgkla
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mnjwagwo';
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, service, message: msg })
+    });
+
+    if(res.ok){
+      document.getElementById('form-ok').style.display = 'block';
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-msg').value = '';
+      document.getElementById('f-service').selectedIndex = 0;
+      btn.textContent = 'Mensaje enviado ✓';
+      setTimeout(()=>{
+        document.getElementById('form-ok').style.display = 'none';
+        btn.textContent = 'Enviar mensaje';
+        btn.disabled = false;
+      }, 5000);
+    } else {
+      throw new Error('Error del servidor');
+    }
+  } catch(e) {
+    alert('Hubo un error al enviar. Por favor escribinos a contactoaltasecuencia@gmail.com');
+    btn.textContent = 'Enviar mensaje';
+    btn.disabled = false;
+  }
 }
 
 // ── SCROLL REVEAL (Intersection Observer)
